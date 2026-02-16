@@ -228,7 +228,7 @@ export default function AdForge(){
       const msgs=imageB64
         ?[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:imageB64}},{type:"text",text:claudePrompt()}]
         :[{type:"text",text:claudePrompt()}];
-      const cr=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:msgs}]})});
+      const cr=await fetch("/api/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:msgs}]})});
       const cd=await cr.json();
       const raw=cd.content?.map(c=>c.text||"").join("")||"";
       const parsed=JSON.parse(raw.replace(/```json|```/g,"").trim());
